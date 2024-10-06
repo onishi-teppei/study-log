@@ -29,6 +29,8 @@ jobs:
           else
             echo "Commits found:"
             echo "$COMMITS"
+            echo "配列か確認"
+            echo "${COMMITS[@]}"
             echo "has_commits=true" >> $GITHUB_OUTPUT
             echo "commit_log=\"${COMMITS}\"" >> $GITHUB_OUTPUT
           fi
