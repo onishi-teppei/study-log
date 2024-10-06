@@ -15,8 +15,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: add for new commits in the last 24 hours
-        id: check_commits
+      - name: check new commits in the last 24 hours
         run: |
           NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           YESTERDAY=$(date -u -d "24 hours ago" +"%Y-%m-%dT%H:%M:%SZ")
@@ -25,24 +24,23 @@ jobs:
           echo "commit_hashes=${COMMITS}" >> $GITHUB_ENV
           if [ -z "$COMMITS" ]; then
             echo "No commits found in the last 24 hours."
+            echo "continue=false" >> $GITHUB_ENV
           else
             echo "Commits found:"
-            TIMESTAMP=$(date "+%Y-%m-%d")
-            echo "## study-log 作業記録 ${TIMESTAMP}" >> study-log.md
-            for commit in ${COMMITS[@]}; do
-              echo "https://github.com/${{ github.repository }}/commit/${commit} <br>" >> study-log.md
-            done
-            git config user.name "onishi-teppei"
-            git config user.email "teppei99.nxw@gmail.com"
-            git add ./study-log.md
-            git commit -m "Update study log with commits from the last 24 hours"
-            git push origin main
+            echo "continue=true" >> $GITHUB_ENV
           fi
 
-      - name: Print commit hashes
+      - name: Print commit
+        if: env.continue == 'true'
         run: |
-          # 環境変数を配列として分割
+          TIMESTAMP=$(date "+%Y-%m-%d")
+          echo "## study-log 作業記録 ${TIMESTAMP}" >> study-log.md
           IFS=',' read -r -a commits_array <<< "${{ env.commit_hashes }}"
-          for commit in "${commits_array[@]}"; do
-            echo "Commit: $commit"
+          for commit in ${commits_array[@]}; do
+            echo "https://github.com/${{ github.repository }}/commit/${commit} <br>" >> study-log.md
           done
+          git config user.name "onishi-teppei"
+          git config user.email "teppei99.nxw@gmail.com"
+          git add ./study-log.md
+          git commit -m "Update study log with commits from the last 24 hours"
+          git push origin main
