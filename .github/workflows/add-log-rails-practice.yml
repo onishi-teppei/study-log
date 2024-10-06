@@ -50,8 +50,7 @@ jobs:
           echo "## rails-practice 作業記録 ${TIMESTAMP}" >> README.md
           IFS=',' read -r -a commits_array <<< "${{ env.commit_hashes }}"
           for commit in ${commits_array[@]}; do
-            echo "- https://github.com/${env.repo_name}/commit/${commit}" >> README.md
-            echo "<br>"
+            echo "- https://github.com/${{ env.repo_name }}/commit/${commit} <br>" >> README.md
           done
           git config user.name "onishi-teppei"
           git config user.email "teppei99.nxw@gmail.com"
