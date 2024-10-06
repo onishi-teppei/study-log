@@ -25,12 +25,12 @@ jobs:
           echo "commitは${COMMITS}"
           if [ -z "$COMMITS" ]; then
             echo "No commits found in the last 24 hours."
-            echo "::set-output name=has_commits::false"
+            echo "has_commits=false" >> $GITHUB_OUTPUT
           else
             echo "Commits found:"
             echo "$COMMITS"
-            echo "::set-output name=has_commits::true"
-            echo "::set-output name=commit_log::$COMMITS"
+            echo "has_commits=true" >> $GITHUB_OUTPUT
+            echo "commit_log=${COMMITS}" >> $GITHUB_OUTPUT
           fi
 
       # 4. 作業ログの更新
