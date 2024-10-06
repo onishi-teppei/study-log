@@ -33,7 +33,7 @@ jobs:
             echo "commit_log=${COMMITS}" >> $GITHUB_OUTPUT
           fi
       - name: Use value
-        run: 
+        run: |
           echo "値出します1: ${{ env.has_commits }}" 
           echo "値出します2: ${{ env.commit_log }}" 
 
