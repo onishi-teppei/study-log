@@ -23,13 +23,14 @@ jobs:
           YESTERDAY=$(date -u -d "24 hours ago" +"%Y-%m-%dT%H:%M:%SZ")
           COMMITS=$(git log --since="$YESTERDAY" --until="$NOW" --pretty=format:"%H %s")
           echo "commitは${COMMITS}"
+          echo "こんにちは"
           if [ -z "$COMMITS" ]; then
             echo "No commits found in the last 24 hours."
           else
             echo "Commits found:"
             TIMESTAMP=$(date "+%Y-%m-%d")
             echo "## New work completed on ${TIMESTAMP}" >> study-log.md
-            for commit in COMMITS do
+            for commit in COMMITS; do
               echo "${commit}" >> study-log.md
             done
             git config user.name "onishi-teppei"
