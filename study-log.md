@@ -251,3 +251,5 @@ fa5c8294ffcf173a904d0a018a63ed5b3eff57f1 github actionsテスト
 575e60feca8c325c943a460f7799b27492243167 log作成
 ## New work completed on 2024-10-06
 COMMITS
+## New work completed on 2024-10-06
+https://github.com/study-log/commit/COMMITS[@]
