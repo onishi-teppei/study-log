@@ -5,14 +5,17 @@ on:
       - main
       - develop
   schedule:
-    - cron: "10 15 * * *"
+    - cron: "15 15 * * *"
   workflow_dispatch:
 jobs:
   add-study-log:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      steps:
+      - name: Checkout target repo
+        uses: actions/checkout@v3
         with:
+          repository: onishi-teppei/rails-practice
           fetch-depth: 0
 
       - name: check new commits in the last 24 hours
@@ -29,6 +32,14 @@ jobs:
             echo "Commits found:"
             echo "continue=true" >> $GITHUB_ENV
           fi
+
+      - name: Checkout this repo
+        if: env.continue == 'true'
+        uses: actions/checkout@v3
+        with:
+          repository: onishi-teppei/study-log
+          ref: main
+          fetch-depth: 1
 
       - name: Print commit
         if: env.continue == 'true'
