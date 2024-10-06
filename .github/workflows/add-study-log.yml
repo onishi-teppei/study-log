@@ -30,7 +30,7 @@ jobs:
             echo "Commits found:"
             echo "$COMMITS"
             echo "::set-output name=has_commits::true"
-            echo "::set-output name=commit_log::\"$COMMITS\""
+            echo "::set-output name=commit_log::$COMMITS"
           fi
 
       # 4. 作業ログの更新
