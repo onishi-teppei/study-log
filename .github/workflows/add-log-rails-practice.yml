@@ -11,8 +11,8 @@ jobs:
   add-study-log:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for 5 minutes
-        run: sleep 300  # 300秒待機
+      - name: Wait for 1 minutes
+        run: sleep 60  # 300秒待機
 
       - name: Checkout target repo
         uses: actions/checkout@v3
@@ -25,7 +25,6 @@ jobs:
           NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           YESTERDAY=$(date -u -d "24 hours ago" +"%Y-%m-%dT%H:%M:%SZ")
           COMMITS=$(git log --since="$YESTERDAY" --until="$NOW" --pretty=format:"%H" | tr '\n' ',')
-          echo "コミットは${COMMITS}"
           echo "commit_hashes=${COMMITS}" >> $GITHUB_ENV
           if [ -z "$COMMITS" ]; then
             echo "No commits found in the last 24 hours."
@@ -33,6 +32,7 @@ jobs:
           else
             echo "Commits found:"
             echo "continue=true" >> $GITHUB_ENV
+            echo "repo_name=${{ github.repository }}" >> $GITHUB_ENV
           fi
 
       - name: Checkout this repo
@@ -47,10 +47,10 @@ jobs:
         if: env.continue == 'true'
         run: |
           TIMESTAMP=$(date "+%Y-%m-%d")
-          echo "## study-log 作業記録 ${TIMESTAMP}" >> study-log.md
+          echo "## rails-practice 作業記録 ${TIMESTAMP}" >> study-log.md
           IFS=',' read -r -a commits_array <<< "${{ env.commit_hashes }}"
           for commit in ${commits_array[@]}; do
-            echo "- https://github.com/${{ github.repository }}/commit/${commit} <br>" >> study-log.md
+            echo "- https://github.com/${env.repo_name}/commit/${commit} <br>" >> study-log.md
           done
           git config user.name "onishi-teppei"
           git config user.email "teppei99.nxw@gmail.com"

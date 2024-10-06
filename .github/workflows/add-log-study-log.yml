@@ -28,6 +28,7 @@ jobs:
           else
             echo "Commits found:"
             echo "continue=true" >> $GITHUB_ENV
+            echo "repo_name=${{ github.repository }}" >> $GITHUB_ENV
           fi
 
       - name: Print commit
@@ -37,7 +38,7 @@ jobs:
           echo "## study-log 作業記録 ${TIMESTAMP}" >> study-log.md
           IFS=',' read -r -a commits_array <<< "${{ env.commit_hashes }}"
           for commit in ${commits_array[@]}; do
-            echo "- https://github.com/${{ github.repository }}/commit/${commit} <br>" >> study-log.md
+            echo "- https://github.com/${env.repo_name}/commit/${commit} <br>" >> study-log.md
           done
           git config user.name "onishi-teppei"
           git config user.email "teppei99.nxw@gmail.com"
