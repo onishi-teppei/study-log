@@ -1,2 +1,4 @@
-# study-log
-学習のログをとる
+## Description
+学習の記録用repository
+githubで草を生やす制約が多いため、せめて個人リポジトリで学習を行ったログをこのリポジトリに残すことでgithubに草を生やすために作成
+
