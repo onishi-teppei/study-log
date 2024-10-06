@@ -25,20 +25,17 @@ jobs:
           echo "commitは${COMMITS}"
           if [ -z "$COMMITS" ]; then
             echo "No commits found in the last 24 hours."
-            echo "has_commits=false" >> $GITHUB_OUTPUT
           else
             echo "Commits found:"
-            echo "$COMMITS"
-            echo "配列か確認"
-            echo "${COMMITS[@]}"
-            echo "has_commits=true" >> $GITHUB_OUTPUT
-            echo "commit_log=\"${COMMITS}\"" >> $GITHUB_OUTPUT
+            TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
+            echo "## New work completed on ${TIMESTAMP}" >> study-log.md
+            echo "${COMMITS}" >> study-log.md
+            git config user.name "onishi-teppei"
+            git config user.email "teppei99.nxw@gmail.com"
+            git add ./study-log.md
+            git commit -m "Update work log with commits from the last 24 hours"
+            git push origin main  # 作業記録をデフォルトブランチにプッシュ
           fi
-
-      - name: Use value
-        run: |
-          echo "値出します1: ${{ env.has_commits }}" 
-          echo "値出します2: ${{ env.commit_log }}" 
 
       # 4. 作業ログの更新
       # - name: Update work log with commit details
