@@ -1,0 +1,13 @@
+name: Daily Work Log Update
+
+on:
+  schedule:
+    - cron: "* * * * *"  # 毎日0:00 (UTC)に実行される。時間は必要に応じて調整可
+
+jobs:
+  dump-value:
+    name: dump-value
+    runs-on: ubuntu-latest
+    steps:
+      - name: echo hello
+        run: echo 'hello teppei'
