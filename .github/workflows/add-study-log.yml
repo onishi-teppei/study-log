@@ -1,11 +1,11 @@
-name: Cron test
+name: sdd study log
 on:
   push:
     branches:
       - main
       - develop
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "10 15 * * *"
   workflow_dispatch:
 jobs:
   add-study-log:
@@ -27,26 +27,14 @@ jobs:
             echo "No commits found in the last 24 hours."
           else
             echo "Commits found:"
-            TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
+            TIMESTAMP=$(date "+%Y-%m-%d")
             echo "## New work completed on ${TIMESTAMP}" >> study-log.md
-            echo "${COMMITS}" >> study-log.md
+            for commit in COMMITS[@] do
+              echo "${commit}" >> study-log.md
+            done
             git config user.name "onishi-teppei"
             git config user.email "teppei99.nxw@gmail.com"
             git add ./study-log.md
             git commit -m "Update work log with commits from the last 24 hours"
             git push origin main  # 作業記録をデフォルトブランチにプッシュ
           fi
-
-      # 4. 作業ログの更新
-      # - name: Update work log with commit details
-      #   if: steps.check_commits.outputs.has_commits == 'true'
-      #   run: |
-      #     echo "書き込み実行"
-      #     TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
-      #     echo "## New work completed on ${TIMESTAMP}" >> study-log.md
-      #     echo "${{ steps.check_commits.outputs.commit_log }}" >> study-log.md
-      #     git config user.name "onishi-teppei"
-      #     git config user.email "teppei99.nxw@gmail.com"
-      #     git add ./study-log.md
-      #     git commit -m "Update work log with commits from the last 24 hours"
-      #     git push origin main  # 作業記録をデフォルトブランチにプッシュ
