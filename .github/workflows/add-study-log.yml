@@ -30,7 +30,7 @@ jobs:
             echo "Commits found:"
             TIMESTAMP=$(date "+%Y-%m-%d")
             echo "## New work completed on ${TIMESTAMP}" >> study-log.md
-            for commit in COMMITS[@]; do
+            for commit in ${COMMITS[@]}; do
               echo "https://github.com/study-log/commit/${commit}" >> study-log.md
             done
             git config user.name "onishi-teppei"
