@@ -73,3 +73,7 @@ githubで草を生やす制約が多いため、せめて個人リポジトリ�
 - https://github.com/onishi-teppei/study-log/commit/79d3158b7877efb35261476a39fb089f66b875e4 <br>
 - https://github.com/onishi-teppei/study-log/commit/575e60feca8c325c943a460f7799b27492243167 <br>
 - https://github.com/onishi-teppei/study-log/commit/68dbdc64e4ee8aaeca8501ac43a9b7ee18156027 <br>
+### rails-practice 作業記録 2024-10-06
+- https://github.com/onishi-teppei/rails-practice/commit/8409dc05224760c99c5e0588d398fd87d802ca67 <br>
+- https://github.com/onishi-teppei/rails-practice/commit/11d074505b17442d7808beb2e20b7391d4565911 <br>
+- https://github.com/onishi-teppei/rails-practice/commit/580507becac4d6a2b5c6c6c8df5bba9ea1d64765 <br>
