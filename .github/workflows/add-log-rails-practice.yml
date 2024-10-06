@@ -2,7 +2,6 @@ name: sdd study log
 on:
   push:
     branches:
-      - main
       - develop
   schedule:
     - cron: "10 15 * * *"
