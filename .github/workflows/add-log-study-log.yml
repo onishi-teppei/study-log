@@ -35,7 +35,7 @@ jobs:
         if: env.continue == 'true'
         run: |
           TIMESTAMP=$(date "+%Y-%m-%d")
-          echo "## study-log 作業記録 ${TIMESTAMP}" >> README.md
+          echo "### study-log 作業記録 ${TIMESTAMP}" >> README.md
           IFS=',' read -r -a commits_array <<< "${{ env.commit_hashes }}"
           for commit in ${commits_array[@]}; do
             echo "- https://github.com/${{ env.repo_name }}/commit/${commit} <br>" >> README.md

@@ -32,7 +32,7 @@ jobs:
           else
             echo "Commits found:"
             echo "continue=true" >> $GITHUB_ENV
-            echo "repo_name=${{ github.repository }}" >> $GITHUB_ENV
+            echo "repo_name=onishi-teppei/rails-practice" >> $GITHUB_ENV
           fi
 
       - name: Checkout this repo
@@ -47,7 +47,7 @@ jobs:
         if: env.continue == 'true'
         run: |
           TIMESTAMP=$(date "+%Y-%m-%d")
-          echo "## rails-practice 作業記録 ${TIMESTAMP}" >> README.md
+          echo "### rails-practice 作業記録 ${TIMESTAMP}" >> README.md
           IFS=',' read -r -a commits_array <<< "${{ env.commit_hashes }}"
           for commit in ${commits_array[@]}; do
             echo "- https://github.com/${{ env.repo_name }}/commit/${commit} <br>" >> README.md
