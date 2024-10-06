@@ -47,13 +47,22 @@ jobs:
         if: env.continue == 'true'
         run: |
           TIMESTAMP=$(date "+%Y-%m-%d")
-          echo "### rails-practice 作業記録 ${TIMESTAMP}" >> README.md
+          FILENAME="study-log/${TIMESTAMP}.md"
+
+          if [ ! -f "${FILENAME}" ]; then
+            echo "Creating file: ${FILENAME}"
+            touch "study-log/${FILENAME}"
+          else
+            echo "File already exists: ${FILENAME}"
+          fi
+
+          echo "## rails-practice 作業記録 ${TIMESTAMP}" >> ${FILENAME}
           IFS=',' read -r -a commits_array <<< "${{ env.commit_hashes }}"
           for commit in ${commits_array[@]}; do
-            echo "- https://github.com/${{ env.repo_name }}/commit/${commit} <br>" >> README.md
+            echo "- https://github.com/${{ env.repo_name }}/commit/${commit} <br>" >> ${FILENAME}
           done
           git config user.name "onishi-teppei"
           git config user.email "teppei99.nxw@gmail.com"
-          git add ./README.md
+          git add ./${FILENAME}
           git commit -m "Update study log with commits from the last 24 hours"
           git push origin main
