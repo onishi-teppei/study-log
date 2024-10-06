@@ -27,7 +27,7 @@ jobs:
         run: |
           NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           YESTERDAY=$(date -u -d "24 hours ago" +"%Y-%m-%dT%H:%M:%SZ")
-          COMMITS=$(git log --since="$YESTERDAY" --until="$NOW" --pretty=format:"%H" | tr '\n' ',')
+          COMMITS=$(git log --all --since="$YESTERDAY" --until="$NOW" --pretty=format:"%H" | tr '\n' ',')
           echo "commit_hashes=${COMMITS}" >> $GITHUB_ENV
           if [ -z "$COMMITS" ]; then
             echo "No commits found in the last 24 hours."
