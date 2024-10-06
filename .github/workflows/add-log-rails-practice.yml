@@ -3,17 +3,13 @@ on:
   push:
     branches:
       - main
-      - develop
   schedule:
-    - cron: "10 15 * * *"
+    - cron: "15 0 * * *"
   workflow_dispatch:
 jobs:
   add-study-log:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for 1 minutes
-        run: sleep 60  # 300秒待機
-
       - name: Checkout target repo
         uses: actions/checkout@v3
         with:
@@ -27,7 +23,7 @@ jobs:
         run: |
           NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           YESTERDAY=$(date -u -d "24 hours ago" +"%Y-%m-%dT%H:%M:%SZ")
-          COMMITS=$(git log --all --since="$YESTERDAY" --until="$NOW" --pretty=format:"%H" | tr '\n' ',')
+          COMMITS=$(git log --all --since="$YESTERDAY" --until="$NOW" --author="onishi-teppei" --pretty=format:"%H" | tr '\n' ',')
           echo "commit_hashes=${COMMITS}" >> $GITHUB_ENV
           if [ -z "$COMMITS" ]; then
             echo "No commits found in the last 24 hours."
