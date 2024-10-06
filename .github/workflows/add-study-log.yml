@@ -1,5 +1,9 @@
 name: Daily Work Log Update
 
+on:
+  schedule:
+    - cron: '04 14 * * *'
+
 jobs:
   dump-value:
     name: dump-value
