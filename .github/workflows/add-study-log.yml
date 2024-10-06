@@ -1,8 +1,6 @@
-name: Daily Work Log Update
+name: Update daily study log
 
-on:
-  schedule:
-    - cron: '04 14 * * *'
+on: [push]
 
 jobs:
   dump-value:
