@@ -37,6 +37,8 @@ jobs:
         run: |
           TIMESTAMP=$(date "+%Y-%m-%d")
           FILENAME="./study-log/${TIMESTAMP}.md"
+          files=$(ls -la)
+          echo "Files in the directory: $files"
 
           if [ ! -f "${FILENAME}" ]; then
             echo "Creating file: ${FILENAME}"
