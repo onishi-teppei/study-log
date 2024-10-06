@@ -47,7 +47,7 @@ jobs:
         if: env.continue == 'true'
         run: |
           TIMESTAMP=$(date "+%Y-%m-%d")
-          FILENAME="study-log/${TIMESTAMP}.md"
+          FILENAME="./study-log/${TIMESTAMP}.md"
 
           if [ ! -f "${FILENAME}" ]; then
             echo "Creating file: ${FILENAME}"
@@ -63,6 +63,6 @@ jobs:
           done
           git config user.name "onishi-teppei"
           git config user.email "teppei99.nxw@gmail.com"
-          git add ./${FILENAME}
+          git add ${FILENAME}
           git commit -m "Update study log with commits from the last 24 hours"
           git push origin main
