@@ -14,18 +14,13 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: main
-          fetch-depth: 0
-
-      - name: Run a one-line script
-        run: echo Hello, world!
+          fetch-depth: 30
 
       - name: Check for new commits in the last 24 hours
         id: check_commits
         run: |
           NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          echo "現在時刻は${NOW}"
           YESTERDAY=$(date -u -d "24 hours ago" +"%Y-%m-%dT%H:%M:%SZ")
-          echo "日付は${YESTERDAY}"
           COMMITS=$(git log --since="$YESTERDAY" --until="$NOW" --pretty=format:"%H %s")
           echo "commitは${COMMITS}"
           if [ -z "$COMMITS" ]; then
@@ -37,3 +32,17 @@ jobs:
             echo "::set-output name=has_commits::true"
             echo "::set-output name=commit_log::\"$COMMITS\""
           fi
+
+      # 4. 作業ログの更新
+      - name: Update work log with commit details
+        if: steps.check_commits.outputs.has_commits == 'true'
+        run: |
+          echo "書き込み実行"
+          TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
+          echo "## New work completed on ${TIMESTAMP}" >> study-log.md
+          echo "${{ steps.check_commits.outputs.commit_log }}" >> study-log.md
+          git config user.name "onishi-teppei"
+          git config user.email "teppei99.nxw@gmail.com"
+          git add ./study-log.md
+          git commit -m "Update work log with commits from the last 24 hours"
+          git push origin main  # 作業記録をデフォルトブランチにプッシュ
