@@ -13,7 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: main
           fetch-depth: 0
 
       - name: Check for new commits in the last 24 hours
@@ -21,21 +20,20 @@ jobs:
         run: |
           NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           YESTERDAY=$(date -u -d "24 hours ago" +"%Y-%m-%dT%H:%M:%SZ")
-          COMMITS=$(git log --since="$YESTERDAY" --until="$NOW" --pretty=format:"%H %s")
+          COMMITS=$(git log --since="$YESTERDAY" --until="$NOW" --pretty=format:"%H")
           echo "commitは${COMMITS}"
-          echo "こんにちは"
           if [ -z "$COMMITS" ]; then
             echo "No commits found in the last 24 hours."
           else
             echo "Commits found:"
             TIMESTAMP=$(date "+%Y-%m-%d")
-            echo "## New work completed on ${TIMESTAMP}" >> study-log.md
+            echo "## ${{ github.repository }}作業記録 ${TIMESTAMP}" >> study-log.md
             for commit in ${COMMITS[@]}; do
-              echo "https://github.com/study-log/commit/${commit}" >> study-log.md
+              echo "https://github.com/${{ github.repository }}/commit/${commit} <br>" >> study-log.md
             done
             git config user.name "onishi-teppei"
             git config user.email "teppei99.nxw@gmail.com"
             git add ./study-log.md
-            git commit -m "Update work log with commits from the last 24 hours"
-            git push origin main  # 作業記録をデフォルトブランチにプッシュ
+            git commit -m "Update study log with commits from the last 24 hours"
+            git push origin main
           fi
