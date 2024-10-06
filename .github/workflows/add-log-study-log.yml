@@ -21,8 +21,6 @@ jobs:
           NOW=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           YESTERDAY=$(date -u -d "24 hours ago" +"%Y-%m-%dT%H:%M:%SZ")
           COMMITS=$(git log --since="$YESTERDAY" --until="$NOW" --pretty=format:"%H")
-          echo "commitは${COMMITS}"
-          echo "commit_hash=${COMMITS}" >> $GITHUB_ENV
           if [ -z "$COMMITS" ]; then
             echo "No commits found in the last 24 hours."
           else
@@ -38,6 +36,3 @@ jobs:
             git commit -m "Update study log with commits from the last 24 hours"
             git push origin main
           fi
-      
-      - name: show env
-        run: echo ${{ env.commit_hash }}
