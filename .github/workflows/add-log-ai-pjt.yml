@@ -1,7 +1,7 @@
 name: add log from ai-pjt
 on:
   schedule:
-    - cron: "20 19 * * *"
+    - cron: "15 19 * * *"
   workflow_dispatch:
 jobs:
   add-study-log:
