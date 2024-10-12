@@ -12,6 +12,7 @@ jobs:
         with:
           repository: onishi-teppei/po-re-house
           fetch-depth: 0
+          token: ${{ secrets.ACCES_MY_REPO }}
 
       - name: Fetch all branches
         run: git fetch --all
