@@ -6,4 +6,4 @@ githubで草を生やす制約が多いため、github actionsを使用して個
 学習記録は[こちら](https://github.com/onishi-teppei/study-log/tree/main/study-log)に格納
 
 🗒️
-✍
+✍[メモ]
